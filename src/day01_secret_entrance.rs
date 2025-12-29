@@ -1,4 +1,4 @@
-use std::fs::{File, read_to_string};
+use std::fs::{read_to_string};
 
 #[derive(PartialEq)]
 pub enum Direction {
@@ -10,7 +10,7 @@ pub struct Dial {
     pub range: u32,
 }
 impl Dial {
-    pub fn rotate(&mut self, direction: Direction, amount: u32, count_target: u32) -> u32{
+    pub fn rotate(&mut self, direction: Direction, amount: u32) -> u32{
         let mut count = 0;
         let direction_mult:i32 = match direction {
             Direction::Left => -1,
@@ -50,7 +50,7 @@ pub fn solve(input_path: &str) {
         .lines()
         .for_each(|line| {
             let (direction, amount) = parse_line(line);
-            password += dial.rotate(direction, amount, 0);
+            password += dial.rotate(direction, amount);
         });
     println!("Day 01 - Secret Entrance\n  - Solution: {}\n", password);
 }
@@ -64,9 +64,9 @@ mod tests {
             position: 5,
             range: 100
         };
-        dial.rotate(Direction::Left, 10, 0);
+        dial.rotate(Direction::Left, 10);
         assert!(dial.position==95);
-        dial.rotate(Direction::Right, 5, 0);
+        dial.rotate(Direction::Right, 5);
         assert!(dial.position==0);
     }
     #[test]
