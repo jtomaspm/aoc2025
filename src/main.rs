@@ -6,6 +6,7 @@ mod day03_lobby;
 mod day04_printing_department;
 mod day05_cafeteria;
 mod day06_trash_compactor;
+mod day07_laboratories;
 
 fn input_path(filename: &str) -> String {
     let home = env::home_dir().expect("failed to find homedir");
@@ -20,4 +21,6 @@ fn main() {
     day04_printing_department::solve(input_path("day04.txt").as_str());
     day05_cafeteria::solve(input_path("day05.txt").as_str());
     day06_trash_compactor::solve(input_path("day06.txt").as_str());
+    day06_trash_compactor::solve_part2(input_path("day06.txt").as_str());
+    day07_laboratories::solve(input_path("day07.txt").as_str());
 }

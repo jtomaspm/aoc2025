@@ -66,9 +66,48 @@ pub fn solve(input_path: &str) {
         expressions.push(Expression::new(&col));
     }
 
-    let solution:u64 =expressions.iter().map(|e| e.solve()).sum();
+    let solution:u64 = expressions.iter().map(|e| e.solve()).sum();
     
-    println!("Day 06 - Trash Compactor\n  - Solution: {}\n", solution);
+    println!("Day 06 - Trash Compactor (Part 1)\n  - Solution: {}\n", solution);
+}
+
+pub fn solve_part2(input_path: &str) {
+    let input: Vec<Vec<char>> = read_to_string(input_path)
+        .expect("failed to read input")
+        .lines()
+        .map(|line| line.chars().collect::<Vec<char>>())
+        .collect();
+    
+    let mut expressions: Vec<Expression> = vec![]; 
+    let mut last_sign = ' ';
+    let mut raw_expression: Vec<String> = vec![];
+    let mut number = "".to_string();
+    for col in 0..input[0].len() {
+        number.clear();
+        for row in 0..input.len() - 1 {
+            if input[row][col] != ' ' {
+                number.push(input[row][col]);
+            }
+        }
+        let sign_row = input.last().expect("invalid input lenght")[col];
+        if sign_row != ' ' {
+            last_sign = sign_row;
+        }
+        if number == "" {
+            raw_expression.push(last_sign.to_string());
+            expressions.push(Expression::new(&raw_expression));
+            raw_expression.clear();
+        } else {
+            raw_expression.push(number.clone());
+        }
+    }
+    if raw_expression.len() != 0 {
+        raw_expression.push(last_sign.to_string());
+        expressions.push(Expression::new(&raw_expression));
+    }
+
+    let solution:u64 = expressions.iter().map(|e| e.solve()).sum();
+    println!("Day 06 - Trash Compactor (Part 2)\n  - Solution: {}\n", solution);
 }
 
 #[cfg(test)]
